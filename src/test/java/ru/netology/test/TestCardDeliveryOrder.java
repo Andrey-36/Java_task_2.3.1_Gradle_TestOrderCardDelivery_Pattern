@@ -51,4 +51,19 @@ public class TestCardDeliveryOrder {
         $("[data-test-id='success-notification'] .notification__content")
                 .should(Condition.text("Встреча успешно запланирована на " + strData2), Duration.ofSeconds(15));
     }
+
+    @Test
+    void shouldCardDeliveryOrderWithNameYo() {
+        Configuration.holdBrowserOpen = true;
+        open("http://localhost:9999");
+        $("[data-test-id = 'city'] input").val(info.getCity());
+        $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
+        $("[data-test-id='date'] input").val(strData);
+        $("[data-test-id = 'name'] input").val("Фёдор Лебедев");
+        $("[data-test-id = 'phone'] input").val(info.getPhone());
+        $(".checkbox__box").click();
+        $(withText("Запланировать")).click();
+        $("[class = 'notification__title']").shouldHave(Condition.text("Успешно!"), Duration.ofSeconds(15));
+        $("[class = 'notification__content']").shouldHave(Condition.text("Встреча успешно запланирована на " + strData), Duration.ofSeconds(15));
+            }
 }
