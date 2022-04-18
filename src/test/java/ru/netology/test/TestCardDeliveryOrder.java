@@ -2,7 +2,11 @@ package ru.netology.test;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import lombok.Data;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import ru.netology.setting.DataGenerator;
@@ -20,6 +24,16 @@ public class TestCardDeliveryOrder {
     private int DAY_2 = 5;
     RegistrationByCardInfo info = DataGenerator.getUser();
     DataGenerator data = new DataGenerator();
+
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
 
     @Test
     void shouldCardDeliveryOrder() {
